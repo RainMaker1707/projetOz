@@ -19,7 +19,7 @@ in
      NewCharacter = {ProjectLib.loadCharacter file CWD#"new_character.txt"}
 	  % Vous devez modifier le code pour que cette variable soit
 	  % assigné un argument 	
-     ListOfAnswersFile = CWD#"test_answers.txt"
+     ListOfAnswersFile = {ProjectLib.loadDatabase file CWD#"test_answers.txt"}
      ListOfAnswers = {ProjectLib.loadCharacter file CWD#"test_answers.txt"}
 
      fun {TreeBuilder Database}
