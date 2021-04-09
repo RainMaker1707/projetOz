@@ -1,6 +1,9 @@
 OZC = ozc
 OZENGINE = ozengine
 
+OZCX = /Applications/Mozart2.app/Contents/Resources/bin/ozc
+OZENGINEX = /Applications/Mozart2.app/Contents/Resources/bin/ozengine
+
 DBPATH= database.txt
 NOGUI= "" # set this variable to --nogui if you don't want the GUI
 
@@ -13,11 +16,11 @@ all: $(OBJ)
 
 run: all
 	@echo RUN Example.ozf
-	@$(OZENGINE) Example.ozf --db $(DBPATH) $(NOGUI)
+	@$(OZENGINEX) Example.ozf --db $(DBPATH) $(NOGUI)
 
 %.ozf: %.oz
 	@echo OZC $@
-	@$(OZC) $(OZFLAGS) -c $< -o $@
+	@$(OZCX) $(OZFLAGS) -c $< -o $@
 
 .PHONY: clean
 
