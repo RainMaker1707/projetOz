@@ -10,6 +10,8 @@ These command are:
 ## GameDriver
 The GameDriver function is a fucntion which take one tree as argument, the tree is built from TreeBuilder function (read bellow) 
 an exemple of these tree is
+
 ```tree(q:'Porte-t-il des lunettes ?'  true: ['Harry Potter' 'Minerva McGonagall'] false: tree(q:'Est-ce que c\'est une fille ?' true:['Hermione Granger'] false:['Ron Weasley']))```
+
 This function work on pattern matching if the pattern of the tree passed as argument is a list then return thevcharacters's name as the leaf contening list of them.
 If the pattern is a tree too then ask the question on the tree and in function of answer rerun GameDrive with the appropriate subtree.
