@@ -1,0 +1,10 @@
+character('Shaun Tyler'
+'A-t-il une soeur?':false
+'Est-ce un personnage fictif?':true
+'A-t-il des cheveux?':false
+'Est-ce un humain':false
+'A-t-il des cheveux noirs?':false
+'Porte-t-il des lunettes?':true
+'A-t-il des cheveux blond?':false
+'Est-ce une fille?':false
+)

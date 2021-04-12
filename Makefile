@@ -6,6 +6,7 @@ OZENGINEX = /Applications/Mozart2.app/Contents/Resources/bin/ozengine
 
 DBPATH = database/database.txt
 NOGUI = "" # setup if wanted to --nogui
+ANS = "database/test_answers.txt"
 
 SRC=$(wildcard *.oz)
 OBJ=$(SRC:.oz=.ozf)
@@ -16,7 +17,7 @@ all: $(OBJ)
 
 run: all build
 	@echo "RUN main.ozf"
-	@$(OZENGINEX) main.ozf --db $(DBPATH) $(NOGUI)
+	@$(OZENGINEX) main.ozf --db $(DBPATH) $(NOGUI) --ans $(ANS)
 
 build:
 	@echo "build main.oz to main.ozf"

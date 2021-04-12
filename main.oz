@@ -10,13 +10,13 @@ define
     Browse = proc {$ Buf} {Browser.browse Buf} end
     Print = proc{$ S} {System.print S} end
     Args = {Application.getArgs record('nogui'(single type:bool default:false optional:true)
-									  'db'(single type:string default:CWD#"database/database.txt"))} 
+									  'db'(single type:string default:CWD#"database/database.txt")
+                                      'ans'(single type:string default:CWD#"database/test_answer.txt")
+                                      )} 
 in
     local 
-        ListOfCharacters 
         TreeBuilder 
-        GameDriver 
-        NoGUI 
+        GameDriver  
         Options 
     in
         fun {TreeBuilder L}
@@ -205,13 +205,11 @@ in
                 end
             end
         end
-        ListOfCharacters = {ProjectLib.loadDatabase file Args.'db'}
-        NoGUI = Args.'nogui'
-        Options = opts(characters:ListOfCharacters 
+        Options = opts(characters:{ProjectLib.loadDatabase file Args.'db'}
                               driver:GameDriver 
-                              noGUI:NoGUI 
+                              noGUI:Args.'nogui'
                               builder:TreeBuilder
-                              autoPlay:{ProjectLib.loadCharacter file CWD#"database/test_answers.txt"}
+                              autoPlay:{ProjectLib.loadCharacter file Args.'ans'}
                             )
         {ProjectLib.play Options}
         {Application.exit 0}
