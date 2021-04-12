@@ -12,12 +12,24 @@ define
     Args = {Application.getArgs record('nogui'(single type:bool default:false optional:true)
 									  'db'(single type:string default:CWD#"database/database.txt"))} 
 in
-    local ListOfCharacters TreeBuilder GameDriver NoGUI Options in
+    local 
+        ListOfCharacters 
+        TreeBuilder 
+        GameDriver 
+        NoGUI 
+        Options 
+    in
         fun {TreeBuilder L}
             /*
             Return a tree built from a list of records
             */
-            local QList Builder Delta Keys in
+            local 
+                QList 
+                Builder 
+                Delta 
+                Keys
+                MaximumArity 
+            in
                 fun {QList L Q}
                     /*
                     Take a list of characters and return a list of Question delta true false
@@ -35,9 +47,12 @@ in
                                     else Acc * ~1
                                     end
                                 [] H|T then
-                                    if H.Q == true then {Counter T Q Acc+1}
-                                    elseif H.Q == false then {Counter T Q Acc-1}
-                                    else {Counter T Q Acc}
+                                    try
+                                        if H.Q == true then {Counter T Q Acc+1}
+                                        else {Counter T Q Acc-1}
+                                        end
+                                    catch _ then 
+                                        {Counter T Q Acc}
                                     end
                             end
                         end
@@ -51,7 +66,15 @@ in
                     end
                 end
                 fun {Builder L K D}
-                    local SearchMin KeyAtIndex RemoveAtIndex Spliter CharList Index Q S T F in
+                    local 
+                        SearchMin 
+                        KeyAtIndex 
+                        RemoveAtIndex 
+                        Spliter 
+                        CharList 
+                        Index 
+                        Q S T F 
+                    in
                         fun {SearchMin L Min MinIndex CurrentIndex}
                             /*
                             L: list of int (here delta of true false answer)
@@ -138,14 +161,35 @@ in
                         end
                     end
                 end
-                % TODO for extension differents number of question:
-                % replace {Arity L.1} by the {Arity (max arity L.x)}
-                Keys = {Arity L.1} % return list of record L.1 keys without the key 1 from t(1:<char name> ...)
+                
+                fun {MaximumArity L Max ArityMax}
+                    /*
+                    Function which search the maximum arity then 
+                    return the longuest length list of keys in record list
+                    */
+                    local Length in
+                        fun {Length L Acc}
+                            case L
+                                of nil then Acc
+                                [] _|T then {Length T Acc+1}
+                            end
+                        end
+                        case L
+                            of nil then ArityMax
+                            [] H|T then 
+                                if Max < {Length {Arity H} 0} then {MaximumArity T {Length {Arity H} 0} {Arity H}}
+                                else {MaximumArity T Max ArityMax} end
+                        end
+                    end
+                end
+                
+                Keys = {MaximumArity L 0 zero()} % return list of record keys
                 Delta = {QList L Keys} % return the delta true-false in absolute value for each question in Keys
+                {Browse {Builder L Keys Delta}}
                 {Builder L Keys Delta}
             end
         end
-        
+
         fun {GameDriver Tree}
             local Result in
                 case Tree
