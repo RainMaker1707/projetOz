@@ -150,7 +150,7 @@ in
                                 Index = {SearchMin D ~1 0 1}
                                 Q = {KeyAtIndex K Index}
                                 S = {Spliter L Q nil nil}
-                                if S.trueList == nil orelse S.falseList == nil then
+                                if (S.trueList == nil orelse S.falseList == nil) orelse (S.trueList == S.falseList) then
                                     % remove useless question
                                     {Builder L {RemoveAtIndex K Index 0} {RemoveAtIndex D Index 1}}
                                 else
