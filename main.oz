@@ -104,15 +104,15 @@ in
                                     end
                             end
                         end
-                        fun {RemoveAtIndex L I Start}
+                        fun {RemoveAtIndex L I}
                             /*
                             revome item in list at index I+1 if flag or I else
                             */
                             case L
                                 of nil then nil
                                 [] H|T then 
-                                    if I == Start then T
-                                    else H|{RemoveAtIndex T I-1 Start}
+                                    if I == 0 then T
+                                    else H|{RemoveAtIndex T I-1}
                                     end
                             end
                         end
@@ -152,11 +152,17 @@ in
                                 S = {Spliter L Q nil nil}
                                 if (S.trueList == nil orelse S.falseList == nil) orelse (S.trueList == S.falseList) then
                                     % remove useless question
-                                    {Builder L {RemoveAtIndex K Index 0} {RemoveAtIndex D Index 1}}
+                                    local Ky in
+                                        Ky = {RemoveAtIndex K Index}
+                                        {Builder L Ky {QList L Ky}}
+                                    end
                                 else
-                                    T = {Builder S.trueList {RemoveAtIndex K Index 0} {RemoveAtIndex D Index 1}}
-                                    F = {Builder S.falseList {RemoveAtIndex K Index 0} {RemoveAtIndex D Index 1}}
-                                    tree(q:Q true:T false:F)
+                                    local Ky in
+                                        Ky = {RemoveAtIndex K Index}
+                                        T = {Builder S.trueList Ky {QList S.trueList Ky}}
+                                        F = {Builder S.falseList Ky {QList S.falseList Ky}}
+                                        tree(q:Q true:T false:F)
+                                    end
                                 end
                         end
                     end
@@ -185,7 +191,7 @@ in
                 
                 Keys = {MaximumArity L 0 zero()} % return list of record keys
                 Delta = {QList L Keys} % return the delta true-false in absolute value for each question in Keys
-                {Browse {Builder L Keys Delta}}
+                %{Browse {Builder L Keys Delta}} % uncomment to browse the tree 
                 {Builder L Keys Delta}
             end
         end
@@ -196,21 +202,26 @@ in
                     of nil then {ProjectLib.surrender}
                     [] _|_ then 
                         {ProjectLib.found Tree Result}
-                        if Result == false then {Print {ProjectLib.surrender}}
-                        else {Print Result} end
+                        if Result == false then {ProjectLib.surrender}
+                        else {Print Result} end % TODO append , between charName
                         unit % must return unit (project request)
                     [] tree(q:Q true:T false:F) then
-                        if {ProjectLib.askQuestion Q} then {GameDriver T}
-                        else {GameDriver F} end
+                        local Ans = {ProjectLib.askQuestion Q} in
+                            if Ans == true then {GameDriver T}
+                            elseif Ans==false then {GameDriver F} 
+                            % here TODO gestion of unknow answer
+                            end
+                        end
                 end
             end
         end
-        Options = opts(characters:{ProjectLib.loadDatabase file Args.'db'}
-                              driver:GameDriver 
-                              noGUI:Args.'nogui'
-                              builder:TreeBuilder
-                              autoPlay:{ProjectLib.loadCharacter file Args.'ans'}
-                            )
+        Options = opts( allowUnknown:true
+                        characters:{ProjectLib.loadDatabase file Args.'db'}
+                        driver:GameDriver 
+                        noGUI:Args.'nogui'
+                        builder:TreeBuilder
+                        autoPlay:{ProjectLib.loadCharacter file Args.'ans'}
+                    )
         {ProjectLib.play Options}
         {Application.exit 0}
     end
