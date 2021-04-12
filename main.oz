@@ -71,9 +71,7 @@ in
                         KeyAtIndex 
                         RemoveAtIndex 
                         Spliter 
-                        CharList 
-                        Index 
-                        Q S T F 
+                        CharList
                     in
                         fun {SearchMin L Min MinIndex CurrentIndex}
                             /*
@@ -147,21 +145,23 @@ in
                         case D
                             of nil then {CharList L}
                             [] _|_ then
-                                Index = {SearchMin D ~1 0 1}
-                                Q = {KeyAtIndex K Index}
-                                S = {Spliter L Q nil nil}
-                                if (S.trueList == nil orelse S.falseList == nil) orelse (S.trueList == S.falseList) then
-                                    % remove useless question
-                                    local Ky in
-                                        Ky = {RemoveAtIndex K Index}
-                                        {Builder L Ky {QList L Ky}}
-                                    end
-                                else
-                                    local Ky in
-                                        Ky = {RemoveAtIndex K Index}
-                                        T = {Builder S.trueList Ky {QList S.trueList Ky}}
-                                        F = {Builder S.falseList Ky {QList S.falseList Ky}}
-                                        tree(q:Q true:T false:F)
+                                local Index Q S in
+                                    Index = {SearchMin D ~1 0 1}
+                                    Q = {KeyAtIndex K Index}
+                                    S = {Spliter L Q nil nil}
+                                    if (S.trueList == nil orelse S.falseList == nil) orelse (S.trueList == S.falseList) then
+                                        % remove useless question
+                                        local Ky in
+                                            Ky = {RemoveAtIndex K Index}
+                                            {Builder L Ky {QList L Ky}}
+                                        end
+                                    else
+                                        local Ky T F in
+                                            Ky = {RemoveAtIndex K Index}
+                                            T = {Builder S.trueList Ky {QList S.trueList Ky}}
+                                            F = {Builder S.falseList Ky {QList S.falseList Ky}}
+                                            tree(q:Q true:T false:F)
+                                        end
                                     end
                                 end
                         end
