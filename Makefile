@@ -20,7 +20,9 @@ run: all build
 	@$(OZENGINEX) main.ozf --db $(DBPATH) $(NOGUI) --ans $(ANS)
 
 build:
-	@echo "build main.oz to main.ozf"
+	@echo "build main.oz to main.ozf and PrintL.oz to PrintL.ozf"
+	@$(OZCX) -c PrintL.oz
+	@$(OZCX) -c TreeBuilderFun.oz
 	@$(OZCX) -c main.oz
 
 clean:
