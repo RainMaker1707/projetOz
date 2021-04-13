@@ -51,6 +51,7 @@ define
                     end
                 end
             end
+
             fun {Builder L K D}
                 local 
                     SearchMin 
@@ -127,7 +128,7 @@ define
                             [] H|T then H.1|{CharList T}
                         end
                     end
-                    % main code of  tree builder
+                    % main code of tree builder
                     case D
                         of nil then {CharList L}
                         [] _|_ then
@@ -151,6 +152,7 @@ define
                                 end
                             end
                     end
+                    % end main code of tree builder
                 end
             end
             
