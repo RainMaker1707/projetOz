@@ -15,8 +15,7 @@ OZFLAGS = --nowarnunused
 
 all: $(OBJ)
 
-run:
-	all
+run: all
 	@echo "RUN main.ozf"
 	@$(OZENGINEX) main.ozf --db $(DBPATH) $(NOGUI) --ans $(ANS)
 
