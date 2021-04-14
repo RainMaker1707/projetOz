@@ -3,7 +3,6 @@ import
     ProjectLib
     Browser
     OS
-    System
     Application
     PrintL
     TreeBuilderFun
@@ -11,7 +10,6 @@ define
     CWD = {Atom.toString {OS.getCWD}}#"/"
     PrintList = proc{$ L} {PrintL.printer L} end
     Browse = proc {$ Buf} {Browser.browse Buf} end
-    Print = proc{$ S} {System.print S} end
     TreeBuilder = fun{$ L} {TreeBuilderFun.treeBuilderF L} end
     Args = {Application.getArgs record('nogui'(single type:bool default:false optional:true)
 									  'db'(single type:string default:CWD#"database/database.txt")
@@ -44,13 +42,13 @@ in
                     local Result in
                         case Tree
                             of nil then {ProjectLib.surrender}
-                            [] _|_ then 
-                                {ProjectLib.found Tree Result}
+                            [] leaf(_|_) then 
+                                {ProjectLib.found Tree.1 Result}
                                 if Result == false then {ProjectLib.surrender}
                                 else 
-                                    case Result 
+                                    case Result
                                         of _|_ then {PrintList Result} 
-                                        else {Print Result}
+                                        else {PrintList Result|nil}
                                     end
                                 end 
                                 unit % must return unit (project request)

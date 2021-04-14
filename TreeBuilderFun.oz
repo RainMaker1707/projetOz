@@ -130,7 +130,7 @@ define
                     end
                     % main code of tree builder
                     case D
-                        of nil then {CharList L}
+                        of nil then leaf({CharList L})
                         [] _|_ then
                             local Index Q S in
                                 Index = {SearchMin D ~1 0 1}
