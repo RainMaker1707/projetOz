@@ -23,6 +23,9 @@ run: all
 	@echo OZC $@
 	@$(OZCX) $(OZFLAGS) -c $< -o $@
 
+build:
+	@$(OZCX) -c main.oz
+
 clean:
 	@echo rm $(OBJ)
 	@rm -rf $(OBJ)
