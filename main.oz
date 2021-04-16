@@ -24,18 +24,18 @@ in
             local SearchNode Inner TreeSave in
                 fun {SearchNode Tree Current}
                     case Tree
-                        of _|_ then false
-                        [] tree(q:Q true:T false:F) then
+                        of leaf(_|_) then false
+                        [] question(1:Q true:T false:F) then
                             if Current == T orelse Current == F then Tree
                             else 
                                 local X in
                                     X = {SearchNode T Current}
                                     case X
-                                        of tree(q:_ true:_ false:_) then X
+                                        of question(1:_ true:_ false:_) then X
                                         else {SearchNode F Current}
                                     end
                                 end
-                            end
+                            end 
                     end
                 end
                 fun {Inner Tree}
@@ -52,13 +52,15 @@ in
                                     end
                                 end 
                                 unit % must return unit (project request)
-                            [] tree(q:Q true:T false:F) then
+                            [] question(1:Q true:T false:F) then
                                 local Ans = {ProjectLib.askQuestion Q} in
                                     if Ans == true then {Inner T}
                                     elseif Ans == false then {Inner F} 
                                     % here TODO gestion of unknow answer
                                     elseif Ans == oops then 
-                                        {Inner {SearchNode TreeSave Tree}}
+                                        if TreeSave == Tree then {Inner Tree}
+                                        else {Inner {SearchNode TreeSave Tree}}
+                                        end
                                     end
                                 end
                         end
@@ -69,7 +71,7 @@ in
             end
         end
 
-        Options = opts( allowUnknown:true
+        Options = opts( %allowUnknown:true
                         oopsButton:true
                         characters:{ProjectLib.loadDatabase file Args.'db'}
                         driver:GameDriver 

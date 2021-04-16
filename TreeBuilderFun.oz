@@ -147,7 +147,7 @@ define
                                         Ky = {RemoveAtIndex K Index}
                                         T = {Builder S.trueList Ky {QList S.trueList Ky}}
                                         F = {Builder S.falseList Ky {QList S.falseList Ky}}
-                                        tree(q:Q true:T false:F)
+                                        question(1:Q true:T false:F)
                                     end
                                 end
                             end
