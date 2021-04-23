@@ -52,7 +52,7 @@ define
                 end
             end
 
-            fun {Builder L K D}
+            fun lazy {Builder L K D}
                 local 
                     SearchMin 
                     KeyAtIndex 
