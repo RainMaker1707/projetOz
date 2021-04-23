@@ -8,7 +8,7 @@ define
     proc {Printer L}
         case L
         of H|nil then
-            {OF write(vs:H#"\n")}
+            {OF write(vs:H)}
         []H|T then
             {OF write(vs:H#",")}
             {Printer T}
