@@ -15,6 +15,7 @@ define
             Delta 
             Keys
             MaximumArity 
+            MaxAr
         in
             fun {QList L Q}
                 /*
@@ -176,11 +177,42 @@ define
                     end
                 end
             end
-            
-            Keys = {MaximumArity L 0 zero()} % return list of record keys
+            fun {MaxAr L Q}
+                /*
+                Gestion of case which no one contains all questions.
+                */
+                local Loop in 
+                    fun {Loop L Q}
+                        case L 
+                        of nil then Q
+                        [] H|T then
+                            local Inner in
+                                fun {Inner Question QList}
+                                    case QList
+                                        of nil then false
+                                        []H|T then 
+                                            if Question == H then true
+                                            else {Inner Question T}
+                                            end
+                                    end
+                                end
+                                if {Inner H Q} then {Loop T Q}
+                                else {Loop T H|Q} end
+                            end
+                        end
+                    end
+                    case L
+                        of nil then Q
+                        [] H|T then {MaxAr T {Loop {Arity H}.2 Q}}
+                    end
+                end
+            end
+            Keys = 1|{MaxAr L {MaximumArity L 0 zero()}.2} % return list of record keys
             Delta = {QList L Keys} % return the delta true-false in absolute value for each question in Keys
             %{Browse {Builder L Keys Delta}} % uncomment to browse the tree 
             {Builder L Keys Delta}
         end
     end
 end
+
+
