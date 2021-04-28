@@ -1,0 +1,28 @@
+[
+character('Harry Potter'
+'Est-ce que c\'est une fille ?':false
+'A-t-il des cheveux roux ?':false
+)
+character('Ron Weasley'
+'A-t-il des cheveux roux ?':true
+)
+character('Hermione Granger'
+'Porte-t-il des lunettes ?':false
+'A-t-il des cheveux roux ?':false
+)
+character('Ginny Weasley'
+'Est-ce que c\'est une fille ?':true
+'A-t-il des cheveux roux ?':true
+'A-t-il des cheveux noirs ?':false
+)
+character('Minerva McGonagall'
+'Est-ce que c\'est une fille ?':true
+'A-t-il des cheveux noirs ?':false
+'A-t-il des cheveux roux ?':false
+)
+character('Severus Rogue'
+'Est-ce que c\'est une fille ?':false
+'A-t-il des cheveux noirs ?':true
+'A-t-il des cheveux roux ?':false
+)
+]
